@@ -24,19 +24,9 @@ variable "vnet_name" {
       type = string
 }
 
-variable "vnet_address_space" {
-      description = "vNet Address Space"
-      type = list
-}
-
 # Subnet
 
 variable "subnet_name" {
       description = "Subnet Name"
       type = string
-}
-
-variable "subnet_address_prefixes" {
-      description = "Subnet Prefixes"
-      type = list
 }

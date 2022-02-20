@@ -1,0 +1,55 @@
+
+# Resource Group
+
+module "rg" {
+  source = "./modules/rg"
+  rg_name = var.rg_name
+  rg_location = var.location
+  rg_tags = var.tags
+}
+
+# Networking
+
+module "vnet" {
+  source = "./modules/vnet"
+  for_each = {
+    dev = "10.0.0.0/16"
+    prod = "10.1.0.0/16"
+  }
+  vnet_name = "${var.vnet_name}-${each.key}"
+  location = module.rg.rg_location
+  rg_name = module.rg.rg_name
+  vnet_address_space = [each.value]
+  tags = var.tags
+}
+
+module "dev-subnets" {
+  source = "./modules/subnet"
+  for_each = {
+    app1 = "10.0.0.0/16"
+  }
+  subnet_name = "${module.vnet["dev"].vnet_name}-${var.subnet_name}-${each.key}"
+  vnet_name = module.vnet["dev"].vnet_name
+  rg_name = module.rg.rg_name
+  subnet_address_prefixes = [each.value]
+}
+
+module "prod-subnets" {
+  source = "./modules/subnet"
+  for_each = {
+    app1 = "10.1.0.0/16"
+  }
+  subnet_name = "${module.vnet["prod"].vnet_name}-${var.subnet_name}-${each.key}"
+  vnet_name = module.vnet["prod"].vnet_name
+  rg_name = module.rg.rg_name
+  subnet_address_prefixes = [each.value]
+}
+
+module "peering" {
+  source = "./modules/vnet_2way_peering"
+  rg_name = module.rg.rg_name
+  vnet1_id = module.vnet["dev"].vnet_id
+  vnet1_name = module.vnet["dev"].vnet_name
+  vnet2_id = module.vnet["prod"].vnet_id
+  vnet2_name = module.vnet["prod"].vnet_name
+}
