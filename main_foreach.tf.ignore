@@ -16,7 +16,7 @@ module "vnet" {
     dev = "10.0.0.0/16"
     prod = "10.1.0.0/16"
   }
-  vnet_name = "${var.vnet_name}-${each.key}"
+    vnet_name = "${var.vnet_name}-${each.key}"
   location = module.rg.rg_location
   rg_name = module.rg.rg_name
   vnet_address_space = [each.value]
@@ -26,7 +26,8 @@ module "vnet" {
 module "dev-subnets" {
   source = "./modules/subnet"
   for_each = {
-    app1 = "10.0.0.0/16"
+    app1 = "10.0.0.0/24"
+    app2 = "10.0.1.0/24"
   }
   subnet_name = "${module.vnet["dev"].vnet_name}-${var.subnet_name}-${each.key}"
   vnet_name = module.vnet["dev"].vnet_name
@@ -37,7 +38,7 @@ module "dev-subnets" {
 module "prod-subnets" {
   source = "./modules/subnet"
   for_each = {
-    app1 = "10.1.0.0/16"
+    app1 = "10.1.0.0/24"
   }
   subnet_name = "${module.vnet["prod"].vnet_name}-${var.subnet_name}-${each.key}"
   vnet_name = module.vnet["prod"].vnet_name

@@ -15,7 +15,7 @@ rg_name = "cb-vnetpeering"
 
 vnet_name = "cb-vnet"
 
-vnet_count = 2
+vnet_count = 3
 
 # Subnet
 
