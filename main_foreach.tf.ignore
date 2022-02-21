@@ -47,9 +47,10 @@ module "prod-subnets" {
 
 module "peering" {
   source = "./modules/vnet_2way_peering"
-  rg_name = module.rg.rg_name
+  vnet1_rg = module.vnet["dev"].vnet_rg
   vnet1_id = module.vnet["dev"].vnet_id
   vnet1_name = module.vnet["dev"].vnet_name
+  vnet2_rg = module.vnet["prod"].vnet_rg
   vnet2_id = module.vnet["prod"].vnet_id
   vnet2_name = module.vnet["prod"].vnet_name
 }

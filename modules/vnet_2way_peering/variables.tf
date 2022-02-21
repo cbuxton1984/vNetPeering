@@ -1,5 +1,9 @@
-variable "rg_name" {
-    description = "Resource Group Name"
+variable "vnet1_rg" {
+    description = "vNET1 Resource Group Name"
+    type = string
+}
+variable "vnet2_rg" {
+    description = "vNET2 Resource Group Name"
     type = string
 }
 variable "vnet1_id" {
