@@ -9,11 +9,13 @@ tags = {
 
 # Resource Group
 
-rg_name = "cb-pipelinedemo"
+rg_name = "cb-vnetpeering"
 
 # Virtual Network
 
 vnet_name = "cb-vnet"
+
+vnet_count = 2
 
 # Subnet
 

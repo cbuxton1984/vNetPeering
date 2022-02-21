@@ -13,20 +13,25 @@ variable "tags" {
 # Resource Group
 
 variable "rg_name" {
-    type = string
-    description = "Resource group name"
+  type = string
+  description = "Resource group name"
 }
 
 # Virtual Network
 
 variable "vnet_name" {
-      description = "vNet Name"
-      type = string
+    description = "vNet Name"
+    type = string
+}
+
+variable "vnet_count" {
+  description = "vNet Count"
+  type = number
 }
 
 # Subnet
 
 variable "subnet_name" {
-      description = "Subnet Name"
-      type = string
+    description = "Subnet Name"
+    type = string
 }

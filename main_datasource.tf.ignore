@@ -1,7 +1,7 @@
 # Data Source
 
 data "azurerm_virtual_network" "transit_hub" {
-  name = "cb-transit-vnet"
+  name = "cb-transit-network"
   resource_group_name = "cb-transit-hub"
 }
 
@@ -19,6 +19,7 @@ module "rg" {
 module "vnet" {
   source = "./modules/vnet"
   count = 1
+  #count = var.vnet_count
   vnet_name = "${var.vnet_name}-${count.index}"
   location = module.rg.rg_location
   rg_name = module.rg.rg_name
@@ -44,3 +45,17 @@ module "peering" {
   vnet2_id = data.azurerm_virtual_network.transit_hub.id
   vnet2_name = data.azurerm_virtual_network.transit_hub.name
 }
+
+/*
+module "peering_count" {
+  source = "./modules/vnet_2way_peering"
+  count = var.vnet_count
+  vnet1_rg = module.vnet[count.index].vnet_rg
+  vnet1_id = module.vnet[count.index].vnet_id
+  vnet1_name = module.vnet[count.index].vnet_name
+  vnet2_rg = data.azurerm_virtual_network.transit_hub.resource_group_name
+  vnet2_id = data.azurerm_virtual_network.transit_hub.id
+  vnet2_name = data.azurerm_virtual_network.transit_hub.name
+
+}
+*/
